@@ -1,8 +1,8 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
-// import flash from "express-flash";
-// import session from "express-session";
+import flash from "express-flash";
+import session from "express-session";
 import Greeting from "./greeting.js";
 
 const app = express();
@@ -19,13 +19,13 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// app.use(session({
-// 	secret: "secret key",
-// 	resave: false,
-// 	saveUninitialized: true,
-// 	// cookie: { maxAge: 60000 }
-// }));
-// app.use(flash());
+app.use(session({
+	secret: "secret",
+	resave: false,
+	saveUninitialized: true,
+	cookie: { maxAge: 60000 }
+}));
+app.use(flash());
 
 
 // ---------- Index Route ---------- //
@@ -33,17 +33,19 @@ app.get('/', function (req, res) {
 	res.render('index', {
 		greeting: greeting.getGreeting(),
 		hidden: greeting.getGreeting() !== '' ? '' : 'hidden',
-		// message: req.flash('error')[0],
-		// messageStyle: "error"
+		message: req.flash('error')[0],
 	});
 });
 
 // ---------- Greet Route ---------- //
 app.post('/greetings', function (req, res) {
-	greeting.setName(req.body.name);
-	greeting.setGreeting(req.body.language);
-	// req.flash('info', "Welcome");
-
+	if (greeting.setName(req.body.name)) {
+		greeting.setGreeting(req.body.language);
+	}
+	const message = greeting.getMessage();
+	if (message) {
+		req.flash('error', message);
+	}
 	res.redirect('/');
 })
 

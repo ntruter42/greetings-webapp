@@ -17,7 +17,8 @@ html {
 }
 
 body {
-	background: url("/images/wallhaven-e7jj6r.jpg");
+	/* background: url("/images/wallhaven-e7jj6r.jpg"); */
+	background: linear-gradient(135deg, #222, #444);
 	background-position: top center;
 	background-size: cover;
 }
@@ -65,4 +66,37 @@ button {
 .greet-message {
 	font-size: 2rem;
 	margin: auto;
+}
+
+.message {
+	color: black;
+	border-radius: 0.25rem;
+
+	padding: 0.25rem 0.5rem;
+	margin: auto;
+}
+
+.error {
+	background: #f88;
+	border: 1px solid red;
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }

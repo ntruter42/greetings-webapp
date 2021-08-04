@@ -6,13 +6,19 @@ export default function Greeting() {
 		'afrikaans': 'Hallo, ',
 		'xhosa': 'Molo, '
 	};
-	let message = '';
+	let message = {
+		'text': '',
+		'type': 'hidden'
+	};
 
 	function setName(input) {
 		if (input === '') {
-			
+			setMessage("Enter a name", "error");
+		} else {
+			name = input.trim();
+			return true;
 		}
-		name = input.trim();
+		return false;
 	}
 
 	function getName() {
@@ -27,12 +33,15 @@ export default function Greeting() {
 		return greeting;
 	}
 
-	function setMessage(text) {
-		message = text;
+	function setMessage(msg, type) {
+		message.text = msg;
+		message.type = type;
 	}
 
 	function getMessage() {
-		const msg = message;
+		const msg = JSON.parse(JSON.stringify(message));
+		message.text = '';
+		message.type = 'hidden';
 		return msg;
 	}
 

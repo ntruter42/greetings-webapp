@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(session({
-	secret: "secret",
+	secret: "secret42",
 	resave: false,
 	saveUninitialized: true,
 	cookie: { maxAge: 60000 }
@@ -30,21 +30,19 @@ app.use(flash());
 
 // ---------- Index Route ---------- //
 app.get('/', function (req, res) {
+	const message = greeting.getGreeting();
+
 	res.render('index', {
-		greeting: greeting.getGreeting(),
-		hidden: greeting.getGreeting() !== '' ? '' : 'hidden',
-		message: req.flash('error')[0],
+		message: message
 	});
 });
 
 // ---------- Greet Route ---------- //
 app.post('/greetings', function (req, res) {
-	if (greeting.setName(req.body.name)) {
-		greeting.setGreeting(req.body.language);
-	}
-	const message = greeting.getMessage();
-	if (message) {
-		req.flash('error', message);
+	if (greeting.setName(req.body.name) && greeting.setLanguage(req.body.language)) {
+		greeting.setGreeting();
+	} else {
+		req.flash('error', greeting.getMessage());
 	}
 	res.redirect('/');
 })

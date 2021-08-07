@@ -1,8 +1,7 @@
-<div class="greetings flex col">
+<div class="container flex col">
 	<h1>Greeting</h1>
 
 	<form class="flex col" action="/greetings" method="post">
-		<div class="{{message.type}} message">{{message.text}}</div>
 
 		<input type="text" name="name" id="name">
 
@@ -24,5 +23,5 @@
 		<button type="submit">Greet Me</button>
 	</form>
 
-	<div class="greet-message fade-in {{hidden}}">{{greeting}}</div>
+	<div class="message">{{message}}</div>
 </div>

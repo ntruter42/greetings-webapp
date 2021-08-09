@@ -1,29 +1,34 @@
 <div class="container flex col">
 	<h1>Greeting</h1>
 
-	<form class="flex col" action="/greetings" method="post">
-		<input type="text" name="name" id="name">
+	<div class="position-wrapper flex col">
+		<form class="user-input flex col" action="/greetings" method="post">
+			<input type="text" name="name" id="name">
 
-		<div class="language-select flex row">
-			<label for="english">
-				<input id="english" type="radio" name="language" value="english">
-				<span>English</span>
-			</label>
-			<label for="afrikaans">
-				<input id="afrikaans" type="radio" name="language" value="afrikaans">
-				<span>Afrikaans</span>
-			</label>
-			<label for="xhosa">
-				<input id="xhosa" type="radio" name="language" value="xhosa">
-				<span>isiXhosa</span>
-			</label>
-		</div>
+			<div class="language-select flex row">
+				<label for="english">
+					<input id="english" type="radio" name="language" value="english">
+					<span>English</span>
+				</label>
+				<label for="afrikaans">
+					<input id="afrikaans" type="radio" name="language" value="afrikaans">
+					<span>Afrikaans</span>
+				</label>
+				<label for="xhosa">
+					<input id="xhosa" type="radio" name="language" value="xhosa">
+					<span>isiXhosa</span>
+				</label>
+			</div>
 
-		<button type="submit">Greet Me</button>
-	</form>
-	
-	<form class="flex col" action="/reset" method="post">
-	</form>
+			<button type="submit">Greet Me</button>
+		</form>
 
-	<div class="{{hidden}} {{style}} message">{{message}}</div>
+		<form class="greeted-count flex col" action="/reset" method="post">
+			<a href="/greeted">Greeted Users</a>
+			<div class="count">{{count}}</div>
+			<button type="submit">Reset</button>
+		</form>
+	</div>
+
+	<div class="{{hidden}} {{style}} message fade-in">{{message}}</div>
 </div>

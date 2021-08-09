@@ -36,13 +36,19 @@ form {
 }
 
 input,
-button {
+button,
+a {
 	border-radius: 0.25rem;
 	border: none;
 	outline: none;
 
 	padding: 0.25rem 0.5rem;
 	margin: auto;
+}
+
+a {
+	color: inherit;
+	text-decoration: underline;
 }
 
 .flex {
@@ -67,8 +73,6 @@ button {
 
 	padding: 0.25rem 0.5rem;
 	margin: auto;
-
-	animation: fade-in 1s;
 }
 
 .greeting {
@@ -80,6 +84,10 @@ button {
 	color: black;
 	background: #f88;
 	border: 1px solid red;
+}
+
+.fade-in {
+	animation: fade-in 1s;
 }
 
 @keyframes fade-out {

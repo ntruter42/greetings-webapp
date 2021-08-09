@@ -32,23 +32,49 @@ app.use(flash());
 app.get('/', function (req, res) {
 	const message = greeting.getGreeting() ? greeting.getGreeting() : req.flash('error')[0];
 	const style = greeting.getGreeting() ? 'greeting' : 'error';
-	const hidden = message ? '' : 'hidden';
+	const count = greeting.getCount();
 
 	res.render('index', {
 		message: message,
+		hidden: message ? '' : 'hidden',
 		style: style,
-		hidden: hidden
+		count: count
 	});
 });
 
 // ---------- Greet Route ---------- //
 app.post('/greetings', function (req, res) {
-	if (!greeting.setName(req.body.name) || !greeting.setLanguage(req.body.language)) {
-		req.flash('error', "Enter a name and choose a language");
+	if (!greeting.setName(req.body.name)) {
+		req.flash('error', "Enter a name");
+	} else if (!greeting.setLanguage(req.body.language)) {
+		req.flash('error', "Choose a language");
+	} else {
+		greeting.setGreeting();
 	}
 	res.redirect('/');
 })
 
+// ---------- Reset Route ---------- //
+app.post('/reset', function (req, res) {
+	greeting.reset();
+	res.redirect('/');
+})
+
+// ---------- Greeted Route ---------- //
+app.get('/greeted', function (req, res) {
+	res.render('greeted', {
+		users: greeting.getUsers()
+	});
+});
+
+// ---------- User Route ---------- //
+app.get('/counter/:username', function (req, res) {
+	res.render('counter', {
+		username: req.params.username,
+		count: greeting.getUserCount(req.params.username),
+		plural: greeting.getUserCount(req.params.username) > 1 ? 's' : ''
+	});
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

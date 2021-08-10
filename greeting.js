@@ -1,4 +1,4 @@
-export default function Greeting() {
+export default function Greeting(db) {
 	let username = '';
 	let language = '';
 	let message = '';
@@ -10,6 +10,7 @@ export default function Greeting() {
 	let greetedUsers = [];
 
 	function setName(name) {
+		message = '';
 		username = name.trim();
 		if (username) {
 			return true;

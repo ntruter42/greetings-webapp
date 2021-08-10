@@ -15,10 +15,16 @@ html {
 }
 
 body {
-	/* background: url("/images/wallhaven-e7jj6r.jpg"); */
+	width: 100%;
+	height: 100%;
 	background: linear-gradient(135deg, #222, #444);
 	background-position: top center;
 	background-size: cover;
+}
+
+.hidden {
+	opacity: 0;
+	transition: opacity 1s;
 }
 
 h1,
@@ -65,25 +71,42 @@ a {
 }
 
 .container {
+	background: url("/images/wallhaven-726poo.jpg");
+	background-size: cover;
+
+	width: 100%;
+	height: 100%;
 	padding: 1rem;
+}
+
+.container.success {
+	background: url("/images/wallhaven-8ox56y.jpg");
+	background-size: cover;
+}
+
+.container.error {
+	background: url("/images/wallhaven-pk29vp.jpg");
+	background-size: cover;
 }
 
 .message {
 	border-radius: 0.25rem;
 
 	padding: 0.25rem 0.5rem;
-	margin: auto;
+	margin-inline: auto;
 }
 
-.greeting {
+.message.success {
 	font-size: 2rem;
-	text-shadow: 1px 1px black;
+	color: black;
+	/* text-shadow: 1px 1px black; */
 }
 
-.error {
+.message.error {
 	color: black;
 	background: #f88;
 	border: 1px solid red;
+	margin-top: 1rem;
 }
 
 .fade-in {

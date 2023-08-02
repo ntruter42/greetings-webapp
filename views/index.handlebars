@@ -1,3 +1,26 @@
 <div>
 	<h1>Greeting</h1>
+
+	<form action="/greet" method="post">
+		<input type="text" name="name" id="name">
+
+		<div class="language-select">
+			<label for="english">
+				<input id="english" type="radio" name="language" value="english">
+				<span>English</span>
+			</label>
+			<label for="afrikaans">
+				<input id="afrikaans" type="radio" name="language" value="afrikaans">
+				<span>Afrikaans</span>
+			</label>
+			<label for="xhosa">
+				<input id="xhosa" type="radio" name="language" value="xhosa">
+				<span>isiXhosa</span>
+			</label>
+		</div>
+
+		<button type="submit">Greet Me</button>
+	</form>
+
+	<div class="{{class}}">{{greeting}}</div>
 </div>

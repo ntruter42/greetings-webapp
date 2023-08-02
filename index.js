@@ -1,14 +1,16 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import flash from "express-flash";
 import bodyParser from "body-parser";
+// import flash from "express-flash";
+import Greeting from "./greeting.js";
 
 const app = express();
+const greeting = Greeting();
 
 app.engine('handlebars', engine({
+	defaultLayout: 'main',
 	viewPath: './views',
-	layoutsDir: './views/layouts',
-	defaultLayout: 'main'
+	layoutsDir: './views/layouts'
 }));
 app.set('view engine', 'handlebars');
 
@@ -19,8 +21,17 @@ app.use(bodyParser.json())
 
 // ---------- Index Route ---------- //
 app.get('/', function (req, res) {
-	res.render('index');
+	res.render('index', {
+		class: greeting.getMessage() !== '' ? '' : 'hidden',
+		greeting: greeting.getMessage()
+	});
 });
+
+app.post('/greet', function (req, res) {
+	greeting.setName(req.body.name);
+	greeting.setMessage(req.body.language);
+	res.redirect('/')
+})
 
 
 const PORT = process.env.PORT || 3000;

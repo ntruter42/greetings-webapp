@@ -1,13 +1,17 @@
 export default function Greeting() {
 	let name = '';
-	let message = '';
+	let greeting = '';
 	let greet = {
 		'english': 'Hello, ',
 		'afrikaans': 'Hallo, ',
 		'xhosa': 'Molo, '
 	};
+	let message = '';
 
 	function setName(input) {
+		if (input === '') {
+			
+		}
 		name = input.trim();
 	}
 
@@ -15,17 +19,28 @@ export default function Greeting() {
 		return name;
 	}
 
-	function setMessage(language) {
-		message = greet[language] + getName();
+	function setGreeting(language) {
+		greeting = greet[language] + getName();
+	}
+
+	function getGreeting() {
+		return greeting;
+	}
+
+	function setMessage(text) {
+		message = text;
 	}
 
 	function getMessage() {
-		return message;
+		const msg = message;
+		return msg;
 	}
 
 	return {
 		setName,
 		getName,
+		setGreeting,
+		getGreeting,
 		setMessage,
 		getMessage
 	}

@@ -1,10 +1,12 @@
-<div>
+<div class="greetings flex col">
 	<h1>Greeting</h1>
 
-	<form action="/greet" method="post">
+	<form class="flex col" action="/greetings" method="post">
+		{{!-- <div class="{{messageStyle}}">{{message}}</div> --}}
+
 		<input type="text" name="name" id="name">
 
-		<div class="language-select">
+		<div class="language-select flex row">
 			<label for="english">
 				<input id="english" type="radio" name="language" value="english">
 				<span>English</span>
@@ -22,5 +24,5 @@
 		<button type="submit">Greet Me</button>
 	</form>
 
-	<div class="{{class}}">{{greeting}}</div>
+	<div class="greet-message {{hidden}}">{{greeting}}</div>
 </div>

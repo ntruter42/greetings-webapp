@@ -1,18 +1,17 @@
 export default function Greeting() {
 	let username = '';
 	let language = '';
-	let greeting = '';
 	let message = '';
-	let greet = {
+	let greeting = {
 		'english': 'Hello, ',
 		'afrikaans': 'Hallo, ',
 		'xhosa': 'Molo, '
 	};
-	let counter = 0;
+	let greetedUsers = [];
 
 	function setName(name) {
 		if (!name) {
-			setMessage("Enter a name");
+			username = '';
 		} else {
 			username = name.trim();
 			return true;
@@ -20,13 +19,9 @@ export default function Greeting() {
 		return false;
 	}
 
-	function getName() {
-		return username;
-	}
-
 	function setLanguage(lang) {
 		if (!lang) {
-			setMessage("Choose a language");
+			language = ''
 		} else {
 			language = lang.trim();
 			return true;
@@ -34,48 +29,24 @@ export default function Greeting() {
 		return false;
 	}
 
-	function getLanguage() {
-		return language;
-	}
-
-	function setGreeting() {
-		greeting = greet[language] + getName();
-	}
-
 	function getGreeting() {
-		const msg = greeting;
-		greeting = '';
-		return msg;
+		if (!greetedUsers.includes(username)) {
+			greetedUsers.push(username);
+		}
+
+		if (language && username) {	
+			return greeting[language] + username;
+		}
 	}
 
-	function setMessage(msg, type) {
-		message = msg;
-	}
-
-	function getMessage() {
-		const msg = message;
-		message = '';
-		return msg;
-	}
-	
-	function setCounter() {
-		counter++;
-	}
-
-	function getCounter() {
-		return counter;
+	function getCount() {
+		return greetedUsers.length;
 	}
 
 	return {
 		setName,
-		getName,
 		setLanguage,
-		getLanguage,
-		setGreeting,
 		getGreeting,
-		setMessage,
-		getMessage,
-		setCounter,
-		getCounter
+		getCount
 	}
 }

@@ -30,19 +30,21 @@ app.use(flash());
 
 // ---------- Index Route ---------- //
 app.get('/', function (req, res) {
-	const message = greeting.getGreeting();
+	const message = greeting.getGreeting() ? greeting.getGreeting() : req.flash('error')[0];
+	const style = greeting.getGreeting() ? 'greeting' : 'error';
+	const hidden = message ? '' : 'hidden';
 
 	res.render('index', {
-		message: message
+		message: message,
+		style: style,
+		hidden: hidden
 	});
 });
 
 // ---------- Greet Route ---------- //
 app.post('/greetings', function (req, res) {
-	if (greeting.setName(req.body.name) && greeting.setLanguage(req.body.language)) {
-		greeting.setGreeting();
-	} else {
-		req.flash('error', greeting.getMessage());
+	if (!greeting.setName(req.body.name) || !greeting.setLanguage(req.body.language)) {
+		req.flash('error', "Enter a name and choose a language");
 	}
 	res.redirect('/');
 })

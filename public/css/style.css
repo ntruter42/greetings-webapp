@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400;500;600;700&family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-
 :root {
-	font-family: "Edu SA Beginner", sans-serif;
+	font-family: sans-serif;
 	font-size: 16px;
 	color: white;
 
@@ -39,9 +37,10 @@ form {
 
 input,
 button {
-	border-radius: 0.5rem;
-	border: 1px solid var(--primary-fg);
+	border-radius: 0.25rem;
+	border: none;
 	outline: none;
+
 	padding: 0.25rem 0.5rem;
 	margin: auto;
 }
@@ -64,19 +63,21 @@ button {
 }
 
 .message {
-	font-size: 2rem;
-
 	border-radius: 0.25rem;
 
 	padding: 0.25rem 0.5rem;
 	margin: auto;
+
+	animation: fade-in 1s;
 }
 
 .greeting {
+	font-size: 2rem;
 	text-shadow: 1px 1px black;
 }
 
 .error {
+	color: black;
 	background: #f88;
 	border: 1px solid red;
 }

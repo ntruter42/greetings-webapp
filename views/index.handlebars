@@ -2,7 +2,6 @@
 	<h1>Greeting</h1>
 
 	<form class="flex col" action="/greetings" method="post">
-
 		<input type="text" name="name" id="name">
 
 		<div class="language-select flex row">
@@ -22,6 +21,9 @@
 
 		<button type="submit">Greet Me</button>
 	</form>
+	
+	<form class="flex col" action="/reset" method="post">
+	</form>
 
-	<div class="message">{{message}}</div>
+	<div class="{{hidden}} {{style}} message">{{message}}</div>
 </div>

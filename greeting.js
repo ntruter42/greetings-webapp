@@ -18,12 +18,20 @@ export default function Greeting(db) {
 		return false;
 	}
 
+	function getName() {
+		return username;
+	}
+
 	function setLanguage(lang) {
 		language = lang;
 		if (language) {
 			return true;
 		}
 		return false;
+	}
+
+	function getLanguage() {
+		return language;
 	}
 
 	function setGreeting() {
@@ -62,6 +70,21 @@ export default function Greeting(db) {
 		greetedUsers = [];
 	}
 
+	function isName(name) {
+		return /^[a-zA-Z]+((-| )[a-zA-Z]+)?$/.test(name);
+	}
+
+	function addName() {
+		return;
+	}
+
+	function hasBeenGreeted() {
+		if (greetedUsers.some(user => user.username === username)) {
+			return true;
+		}
+		return false;
+	}
+
 	return {
 		setName,
 		setLanguage,
@@ -70,6 +93,11 @@ export default function Greeting(db) {
 		getUsers,
 		getCount,
 		getUserCount,
-		reset
+		reset,
+		getName,
+		getLanguage,
+		addName,
+		hasBeenGreeted,
+		isName
 	}
 }

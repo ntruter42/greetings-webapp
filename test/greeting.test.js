@@ -2,8 +2,12 @@ import assert from 'assert'
 import Greeting from '../greeting.js';
 
 describe('Greeting', function () {
+	let greet;
 
-	const greeting = Greeting();
+	beforeEach(function () {
+		greet = Greeting();
+		greet.reset();
+	});
 
 	describe('setName', function () {
 		it('should set the name to "Nicholas"', function () {

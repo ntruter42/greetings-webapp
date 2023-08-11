@@ -65,7 +65,7 @@ app.post('/greetings', function (req, res) {
 		req.flash('error', "Enter a name");
 	} else if (!greeting.setLanguage(req.body.language)) {
 		req.flash('error', "Choose a language");
-	} else if (!/^[a-zA-Z]+((-| )[a-zA-Z]+)?$/.test(req.body.name)) {
+	} else if (!greeting.isName(req.body.name)) {
 		req.flash('error', "Name is invalid");
 	} else {
 		greeting.setGreeting();

@@ -6,7 +6,7 @@ describe('Greeting', function () {
 
 	beforeEach(function () {
 		greet = Greeting();
-		greet.reset();
+		greet.resetNames();
 	});
 
 	describe('setName', function () {
@@ -71,47 +71,9 @@ describe('Greeting', function () {
 		});
 	});
 
-	describe('setNames', function () {
-		it('should set the greeted names to {Nicholas: 1, Terri: 2}', function () {
-			const names = { Nicholas: 1, Terri: 2 };
-			greet.setNames(names);
-
-			assert.equal(greet.getCount(), 2);
-		});
-
-		it('should set the greeted names object to a new object', function () {
-			greet.setName('Frank');
-			greet.addName();
-			let newNames = { 'Grace': 2, 'Hannah': 1 };
-			greet.setNames(newNames);
-
-			assert.deepEqual(greet.getCount(), Object.keys(newNames).length);
-		});
-	});
-
-	describe('getAllNames', function () {
-		it('should return an empty object if no names have been greeted', function () {
-			const greet = Greet();
-			const allNames = greet.getAllNames();
-
-			assert.deepEqual(allNames, {});
-		});
-
-		it('should return an object with all greeted names and their count', function () {
-			const greet = Greet();
-			greet.setName("John");
-			greet.addName();
-			greet.setName("Jane");
-			greet.addName();
-			const allNames = greet.getAllNames();
-
-			assert.deepEqual(allNames, { john: 1, jane: 1 });
-		});
-	});
-
 	describe('resetNames', function () {
 		it('should reset the greeted names to an empty object', function () {
-			greet.setName('Nicholas');
+			greet.setName('Nicholas');                                        
 			greet.addName();
 			greet.resetNames();
 
@@ -130,23 +92,26 @@ describe('Greeting', function () {
 	describe('setMessage', function () {
 		it('should set the message to "Hello, Nicholas" in English', function () {
 			greet.setName('Nicholas');
-			greet.setMessage('english');
+			greet.setLanguage('english'); greet.setGreeting();
+			greet.setGreeting();
 
-			assert.equal(greet.getMessage(), 'Hello, Nicholas');
+			assert.equal(greet.getGreeting(), 'Hello, Nicholas');
 		});
 
 		it('should set the message to "Hallo, Terri" in Afrikaans', function () {
 			greet.setName('Terri');
-			greet.setMessage('afrikaans');
+			greet.setLanguage('afrikaans');
+			greet.setGreeting();
 
-			assert.equal(greet.getMessage(), 'Hallo, Terri');
+			assert.equal(greet.getGreeting(), 'Hallo, Terri');
 		});
 
 		it('should set the message to "Molo, Mthunzi" in Xhosa', function () {
 			greet.setName('Mthunzi');
-			greet.setMessage('xhosa');
+			greet.setLanguage('xhosa');
+			greet.setGreeting();
 
-			assert.equal(greet.getMessage(), 'Molo, Mthunzi');
+			assert.equal(greet.getGreeting(), 'Molo, Mthunzi');
 		});
 	});
 

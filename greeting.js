@@ -35,14 +35,7 @@ export default function Greeting(db) {
 	}
 
 	function setGreeting() {
-		if (!greetedUsers.some(user => user.username === username)) {
-			greetedUsers.push({
-				username: username,
-				count: 1
-			});
-		} else {
-			greetedUsers[greetedUsers.findIndex(user => user.username === username)].count++;
-		}
+		addName();
 		message = greeting[language] + username;
 	}
 
@@ -63,7 +56,7 @@ export default function Greeting(db) {
 		return user ? user.count : 0;
 	}
 
-	function reset() {
+	function resetNames() {
 		username = '';
 		language = '';
 		message = '';
@@ -75,7 +68,14 @@ export default function Greeting(db) {
 	}
 
 	function addName() {
-		return;
+		if (!greetedUsers.some(user => user.username === username)) {
+			greetedUsers.push({
+				username: username,
+				count: 1
+			});
+		} else {
+			greetedUsers[greetedUsers.findIndex(user => user.username === username)].count++;
+		}
 	}
 
 	function hasBeenGreeted() {
@@ -93,7 +93,7 @@ export default function Greeting(db) {
 		getUsers,
 		getCount,
 		getUserCount,
-		reset,
+		resetNames,
 		getName,
 		getLanguage,
 		addName,

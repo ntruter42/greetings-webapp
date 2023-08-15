@@ -1,6 +1,10 @@
 <div class="container flex col {{style}}">
 	<h1>Greeting</h1>
 
+	{{#if error}}
+	<div class="error-message fade-in">{{error}}</div>
+	{{/if}}
+
 	<div class="position-wrapper flex col">
 		<form class="user-input flex col" action="/greetings" method="post">
 			<input type="text" name="name" id="name">
@@ -30,5 +34,7 @@
 		</form>
 	</div>
 
-	<div class="{{hidden}} {{style}} message fade-in">{{message}}</div>
+	{{#if message}}
+	<div class="greeting-message fade-in">{{message}}</div>
+	{{/if}}
 </div>

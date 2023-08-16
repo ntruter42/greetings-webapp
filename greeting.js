@@ -1,21 +1,25 @@
 export default function Greeting(db) {
 	let username = '';
 	let language = '';
-	let message = '';
+	let error = '';
 	let greeting = {
 		'english': 'Hello, ',
 		'afrikaans': 'Hallo, ',
 		'xhosa': 'Molo, '
 	};
 	let greetedUsers = [];
+	let last = '';
 
 	function setName(name) {
-		message = '';
-		username = name.trim();
-		if (username) {
-			return true;
+		username = '';
+		name = name.trim();
+		if (!name) {
+			error = "Enter a name";
+		} else if (!isName(name)) {
+			error = "Name is invalid";
+		} else {
+			username = name.charAt(0).toUpperCase() + name.slice(1);
 		}
-		return false;
 	}
 
 	function getName() {
@@ -23,23 +27,30 @@ export default function Greeting(db) {
 	}
 
 	function setLanguage(lang) {
-		language = lang;
-		if (language) {
-			return true;
+		language = '';
+		if (!username && !lang) {
+			error = "Enter name and Select language";
+		} else if (!lang) {
+			error = "Select a language";
+		} else {
+			language = lang;
 		}
-		return false;
 	}
 
 	function getLanguage() {
 		return language;
 	}
 
-	function setGreeting() {
-		addName();
-		message = greeting[language] + username;
+	function getGreeting() {
+		if (username && language) {
+			return greeting[language] + username;
+		}
+		return '';
 	}
 
-	function getGreeting() {
+	function getErrorMessage() {
+		const message = error;
+		error = '';
 		return message;
 	}
 
@@ -47,11 +58,19 @@ export default function Greeting(db) {
 		return greetedUsers;
 	}
 
-	function getCount() {
+	function setLastUser() {
+		last = username;
+	}
+
+	function getLastUser() {
+		return last;
+	}
+
+	function getUserCount() {
 		return greetedUsers.length;
 	}
 
-	function getUserCount(name) {
+	function getGreetCount(name) {
 		const user = greetedUsers.find(user => user.username === name);
 		return user ? user.count : 0;
 	}
@@ -59,12 +78,19 @@ export default function Greeting(db) {
 	function resetNames() {
 		username = '';
 		language = '';
-		message = '';
+		error = '';
 		greetedUsers = [];
 	}
 
 	function isName(name) {
 		return /^[a-zA-Z]+((-| )[a-zA-Z]+)?$/.test(name);
+	}
+
+	function hasBeenGreeted(name) {
+		if (greetedUsers.some(user => user.username === name)) {
+			return true;
+		}
+		return false;
 	}
 
 	function addName() {
@@ -78,21 +104,16 @@ export default function Greeting(db) {
 		}
 	}
 
-	function hasBeenGreeted() {
-		if (greetedUsers.some(user => user.username === username)) {
-			return true;
-		}
-		return false;
-	}
-
 	return {
 		setName,
 		setLanguage,
-		setGreeting,
 		getGreeting,
+		getErrorMessage,
 		getUsers,
-		getCount,
+		setLastUser,
+		getLastUser,
 		getUserCount,
+		getGreetCount,
 		resetNames,
 		getName,
 		getLanguage,

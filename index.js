@@ -39,30 +39,28 @@ const greeting = Greeting();
 app.get('/', function (req, res) {
 	const message = greeting.getGreeting();
 	const error = req.flash('error')[0];
-	const style = greeting.getGreeting() ? 'success' : 'error';
-	const count = greeting.getCount();
+	const count = greeting.getUserCount();
 
 	res.render('index', {
 		message: message,
 		error: error,
-		style: style,
-		count: count
+		count: count,
+		last: greeting.getLastUser()
 	});
 });
 
 // ---------- Greet Route ---------- //
 app.post('/greetings', function (req, res) {
-	if (!greeting.setName(req.body.name) && !greeting.setLanguage(req.body.language)) {
-		req.flash('error', "Enter name & select language");
-	} else if (!greeting.getName(req.body.name)) {
-		req.flash('error', "Enter a name");
-	} else if (!greeting.getLanguage(req.body.language)) {
-		req.flash('error', "Select a language");
-	} else if (!greeting.isName(req.body.name)) {
-		req.flash('error', "Name is invalid");
-	} else {
-		greeting.setGreeting();
+	greeting.setName(req.body.name);
+	greeting.setLanguage(req.body.language);
+
+	if (greeting.getName() && greeting.getLanguage()) {
+		greeting.addName();
+		greeting.setLastUser();
 	}
+
+	req.flash('error', greeting.getErrorMessage());
+
 	res.redirect('/');
 })
 
@@ -72,10 +70,18 @@ app.post('/reset', function (req, res) {
 	res.redirect('/');
 })
 
+app.post('/reset-greeted', function (req, res) {
+	greeting.resetNames();
+	res.redirect('/greeted');
+})
+
 // ---------- Greeted Route ---------- //
 app.get('/greeted', function (req, res) {
 	res.render('greeted', {
-		users: greeting.getUsers()
+		users: greeting.getUsers(),
+		count: greeting.getUserCount(),
+		last: greeting.getLastUser(),
+		empty: greeting.getUserCount() < 1 ? true : false
 	});
 });
 
@@ -83,8 +89,9 @@ app.get('/greeted', function (req, res) {
 app.get('/counter/:username', function (req, res) {
 	res.render('counter', {
 		username: req.params.username,
-		count: greeting.getUserCount(req.params.username),
-		plural: greeting.getUserCount(req.params.username) > 1 ? 's' : ''
+		count: greeting.getGreetCount(req.params.username),
+		plural: greeting.getGreetCount(req.params.username) > 1 ? 's' : '',
+		last: greeting.getLastUser()
 	});
 });
 

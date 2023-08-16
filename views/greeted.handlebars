@@ -1,10 +1,16 @@
 <div class="container success flex col">
 	<h1>Greeted Users</h1>
 
+	{{#if empty}}<span>There are no greeted users</span>{{/if}}
+
 	{{#each users}}
 	<div><a href="/counter/{{username}}">{{username}}</a></div>
 	{{/each}}
 
-	<form class="flex col" action="/reset" method="post">
+	<form class="greeted-count flex col" action="/reset-greeted" method="post">
+		<div class="flex row">
+			<span>Greeted Users:</span><span class="count">{{count}}</span>
+		</div>
+		{{#if count}}<button type="submit">Reset</button>{{/if}}
 	</form>
 </div>

@@ -8,7 +8,8 @@ export default function Greeting(db) {
 		'xhosa': 'Molo, '
 	};
 	let greetedUsers = [];
-	let last = '';
+	let last = ['/'];
+	let curr = 0;
 
 	function setName(name) {
 		username = '';
@@ -58,14 +59,6 @@ export default function Greeting(db) {
 		return greetedUsers;
 	}
 
-	function setLastUser() {
-		last = username;
-	}
-
-	function getLastUser() {
-		return last;
-	}
-
 	function getUserCount() {
 		return greetedUsers.length;
 	}
@@ -110,8 +103,6 @@ export default function Greeting(db) {
 		getGreeting,
 		getErrorMessage,
 		getUsers,
-		setLastUser,
-		getLastUser,
 		getUserCount,
 		getGreetCount,
 		resetNames,

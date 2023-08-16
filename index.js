@@ -45,7 +45,6 @@ app.get('/', function (req, res) {
 		message: message,
 		error: error,
 		count: count,
-		last: greeting.getLastUser()
 	});
 });
 
@@ -56,7 +55,6 @@ app.post('/greetings', function (req, res) {
 
 	if (greeting.getName() && greeting.getLanguage()) {
 		greeting.addName();
-		greeting.setLastUser();
 	}
 
 	req.flash('error', greeting.getErrorMessage());
@@ -80,7 +78,6 @@ app.get('/greeted', function (req, res) {
 	res.render('greeted', {
 		users: greeting.getUsers(),
 		count: greeting.getUserCount(),
-		last: greeting.getLastUser(),
 		empty: greeting.getUserCount() < 1 ? true : false
 	});
 });
@@ -91,7 +88,6 @@ app.get('/counter/:username', function (req, res) {
 		username: req.params.username,
 		count: greeting.getGreetCount(req.params.username),
 		plural: greeting.getGreetCount(req.params.username) > 1 ? 's' : '',
-		last: greeting.getLastUser()
 	});
 });
 

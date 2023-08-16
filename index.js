@@ -3,8 +3,8 @@ import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "express-flash";
 import session from "express-session";
-import promise from "pg-promise";
-import dotenv from "dotenv";
+// import promise from "pg-promise";
+// import dotenv from "dotenv";
 import Greeting from "./greeting.js";
 
 const app = express();
@@ -29,9 +29,9 @@ app.use(session({
 }));
 app.use(flash());
 
-dotenv.config({ path: './config.env' });
-const pgp = promise();
-const db = pgp(process.env.DB_URL);
+// dotenv.config({ path: './config.env' });
+// const pgp = promise();
+// const db = pgp(process.env.DB_URL);
 
 const greeting = Greeting();
 
@@ -44,7 +44,7 @@ app.get('/', function (req, res) {
 	res.render('index', {
 		message: message,
 		error: error,
-		count: count,
+		count: count
 	});
 });
 

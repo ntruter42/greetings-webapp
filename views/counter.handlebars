@@ -1,5 +1,8 @@
 <div class="container success flex col">
 	<h1>Counter for {{username}}</h1>
 
-	<div>{{username}} has been greeted {{count}} time{{plural}}</div>
+	<div><b>{{username}} has been greeted {{count}} time{{plural}}</b></div>
+	{{#if english}}<div>{{english}} time{{engPlural}} in English</div>{{/if}}
+	{{#if afrikaans}}<div>{{afrikaans}} time{{afrPlural}} in Afrikaans</div>{{/if}}
+	{{#if xhosa}}<div>{{xhosa}} time{{xhoPlural}} in isiXhosa</div>{{/if}}
 </div>

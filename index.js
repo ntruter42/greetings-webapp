@@ -3,8 +3,8 @@ import { engine } from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "express-flash";
 import session from "express-session";
-// import promise from "pg-promise";
-// import dotenv from "dotenv";
+import promise from "pg-promise";
+import dotenv from "dotenv";
 import Greeting from "./greeting.js";
 
 const app = express();
@@ -29,32 +29,42 @@ app.use(session({
 }));
 app.use(flash());
 
-// dotenv.config({ path: './config.env' });
-// const pgp = promise();
-// const db = pgp(process.env.DB_URL);
-
-const greeting = Greeting();
+dotenv.config({ path: './config.env' });
+const pgp = promise();
+const config = {
+	connectionString: process.env.DB_URL,
+	ssl: {
+		rejectUnauthorized: false
+	}
+}
+const db = pgp(config);
+const greeting = Greeting(db);
 
 // ---------- Index Route ---------- //
-app.get('/', function (req, res) {
+app.get('/', async function (req, res) {
 	const message = greeting.getGreeting();
 	const error = req.flash('error')[0];
-	const count = greeting.getUserCount();
+	const count = await greeting.getUserCount();
+	const last = greeting.getLast();
 
 	res.render('index', {
 		message: message,
 		error: error,
-		count: count
+		count: count,
+		last: last
 	});
 });
+// TODO: add a last visited link
 
 // ---------- Greet Route ---------- //
-app.post('/greetings', function (req, res) {
+app.post('/greetings', async function (req, res) {
 	greeting.setName(req.body.name);
 	greeting.setLanguage(req.body.language);
 
 	if (greeting.getName() && greeting.getLanguage()) {
-		greeting.addName();
+		// await greeting.getUsers();
+		await greeting.addName();
+		greeting.setLast();
 	}
 
 	req.flash('error', greeting.getErrorMessage());
@@ -63,31 +73,56 @@ app.post('/greetings', function (req, res) {
 })
 
 // ---------- Reset Route ---------- //
-app.post('/reset', function (req, res) {
-	greeting.resetNames();
+app.post('/reset', async function (req, res) {
+	await greeting.resetNames();
 	res.redirect('/');
 })
 
-app.post('/reset-greeted', function (req, res) {
-	greeting.resetNames();
+app.post('/reset-greeted', async function (req, res) {
+	await greeting.resetNames();
 	res.redirect('/greeted');
 })
 
 // ---------- Greeted Route ---------- //
-app.get('/greeted', function (req, res) {
+app.get('/greeted', async function (req, res) {
+	const users = await greeting.getUsers();
+	const count = await greeting.getUserCount();
+	const empty = await greeting.getUserCount() === 0 ? true : false;
+	const last = greeting.getLast();
+
 	res.render('greeted', {
-		users: greeting.getUsers(),
-		count: greeting.getUserCount(),
-		empty: greeting.getUserCount() < 1 ? true : false
+		users: users,
+		count: count,
+		empty: empty,
+		last: last
 	});
 });
 
 // ---------- User Route ---------- //
-app.get('/counter/:username', function (req, res) {
+app.get('/counter/:username', async function (req, res) {
+	const username = req.params.username;
+	const count = await greeting.getGreetCount(req.params.username);
+	const plural = await greeting.getGreetCount(req.params.username) === 1 ? '' : 's';
+	const last = greeting.getLast();
+
+	const engCount = await greeting.getGreetCount(req.params.username, 'english');
+	const engPlural = await greeting.getGreetCount(req.params.username, 'english') === 1 ? '' : 's';
+	const afrCount = await greeting.getGreetCount(req.params.username, 'afrikaans');
+	const afrPlural = await greeting.getGreetCount(req.params.username, 'afrikaans') === 1 ? '' : 's';
+	const xhoCount = await greeting.getGreetCount(req.params.username, 'xhosa');
+	const xhoPlural = await greeting.getGreetCount(req.params.username, 'xhosa') === 1 ? '' : 's';
+	
 	res.render('counter', {
-		username: req.params.username,
-		count: greeting.getGreetCount(req.params.username),
-		plural: greeting.getGreetCount(req.params.username) > 1 ? 's' : '',
+		username: username,
+		count: count,
+		plural: plural,
+		english: engCount,
+		engPlural: engPlural,
+		afrikaans: afrCount,
+		afrPlural: afrPlural,
+		xhosa: xhoCount,
+		xhoPlural: xhoPlural,
+		last: last
 	});
 });
 

@@ -1,11 +1,13 @@
 import assert from 'assert'
-import Greeting from '../greeting.js';
+import Database from '../services/database.js';
+import Greeting from '../services/greeting.js';
 
 describe('Greeting', function () {
-	let greet;
+	let greeting;
+	let database = Database();
 
 	beforeEach(function () {
-		greet = Greeting();
-		greet.resetNames();
+		greeting = Greeting(db);
+		greeting.resetNames();
 	});
 });

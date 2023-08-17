@@ -66,15 +66,23 @@ export default function Greeting(db) {
 	}
 
 	async function getUsers() {
-		return await db.manyOrNone('SELECT username FROM greeting.greetedusers');
+		const query = `SELECT username FROM greeting.greetedusers`;
+		return await db.manyOrNone(query);
+	}
+
+	async function getUserData(name) {
+		const query = `SELECT * FROM greeting.greetedusers WHERE username = '${name}'`;
+		return await db.oneOrNone(query)
 	}
 
 	async function getUserCount() {
-		return (await db.one('SELECT count(*) FROM greeting.greetedusers')).count;
+		const query = `SELECT count(*) FROM greeting.greetedusers`;
+		return (await db.one(query)).count;
 	}
 
 	async function getGreetCount(name, lang) {
-		const userData = await db.oneOrNone('SELECT * FROM greeting.greetedusers WHERE username = $1', [name]);
+		const query = `SELECT * FROM greeting.greetedusers WHERE username = '${name}'`;
+		const userData = await db.oneOrNone(query);
 
 		let count = 0;
 		if (lang) {
@@ -89,11 +97,13 @@ export default function Greeting(db) {
 		username = '';
 		language = '';
 		error = '';
-		await db.none('TRUNCATE TABLE greeting.greetedusers');
+		const query = `TRUNCATE TABLE greeting.greetedusers`;
+		await db.none(query);
 	}
 
 	async function hasBeenGreeted() {
-		if (await db.oneOrNone('SELECT id FROM greeting.greetedusers WHERE username = $1', [getName()])) {
+		const query = `SELECT id FROM greeting.greetedusers WHERE username = '${getName()}'`;
+		if (await db.oneOrNone(query)) {
 			return true;
 		}
 		return false;
@@ -118,6 +128,7 @@ export default function Greeting(db) {
 		getGreeting,
 		getErrorMessage,
 		getUsers,
+		getUserData,
 		getUserCount,
 		getGreetCount,
 		resetNames,

@@ -87,7 +87,8 @@ app.post('/reset-greeted', async function (req, res) {
 app.get('/greeted', async function (req, res) {
 	const users = await greeting.getUsers();
 	const count = await greeting.getUserCount();
-	const empty = await greeting.getUserCount() === 0 ? true : false;
+	const empty = await greeting.getUserCount() == 0 ? true : false;
+	console.log(await greeting.getUserCount());
 	const last = greeting.getLast();
 
 	res.render('greeted', {

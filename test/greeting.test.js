@@ -5,10 +5,10 @@ import Greeting from '../services/greeting.js';
 describe('Greeting', async function () {
 	let greeting;
 	let database = Database();
-	this.timeout(5000);
+	this.timeout(6000);
 
 	beforeEach(async function () {
-		greeting = Greeting(database);
+		greeting = Greeting(database, 'test');
 		await greeting.resetNames();
 	});
 

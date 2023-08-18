@@ -33,7 +33,7 @@ app.use(session({
 app.use(flash());
 
 const database_setup = Database();
-const greeting_services = Greeting(database_setup);
+const greeting_services = Greeting(database_setup, process.env.NODE_ENV);
 const greeting_routes = greetingRoutes(greeting_services);
 
 app.get('/', greeting_routes.home);

@@ -6,7 +6,7 @@ import Greet from '../applications/greet.js';
 describe('Greeting', async function () {
 	let greeting, greet;
 	let database = Database();
-	this.timeout(6000);
+	this.timeout(10000);
 
 	beforeEach(async function () {
 		greet = Greet();

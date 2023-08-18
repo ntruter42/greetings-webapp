@@ -85,10 +85,12 @@ export default function Greeting(db) {
 		const userData = await db.oneOrNone(query);
 
 		let count = 0;
-		if (lang) {
-			count = userData[lang];
-		} else {
-			count = userData.english + userData.afrikaans + userData.xhosa;
+		if (userData) {
+			if (lang) {
+				count = userData[lang];
+			} else {
+				count = userData.english + userData.afrikaans + userData.xhosa;
+			}
 		}
 		return count;
 	}

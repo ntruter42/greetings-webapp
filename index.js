@@ -5,6 +5,7 @@ import session from "express-session";
 import flash from "express-flash";
 import Database from "./services/database.js";
 import Greeting from "./services/greeting.js";
+import Greet from "./applications/greet.js";
 import greetingRoutes from "./routes/greeting.js";
 
 // ---------- Express Instance ---------- //
@@ -33,8 +34,9 @@ app.use(session({
 app.use(flash());
 
 const database_setup = Database();
-const greeting_services = Greeting(database_setup, process.env.NODE_ENV);
-const greeting_routes = greetingRoutes(greeting_services);
+const greet_application = Greet();
+const greeting_services = Greeting(database_setup, process.env.NODE_ENV, greet_application);
+const greeting_routes = greetingRoutes(greeting_services, greet_application);
 
 app.get('/', greeting_routes.home);
 app.get('/greeted', greeting_routes.greeted);

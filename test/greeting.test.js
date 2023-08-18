@@ -1,22 +1,24 @@
 import assert from 'assert'
 import Database from '../services/database.js';
 import Greeting from '../services/greeting.js';
+import Greet from '../applications/greet.js';
 
 describe('Greeting', async function () {
-	let greeting;
+	let greeting, greet;
 	let database = Database();
 	this.timeout(6000);
 
 	beforeEach(async function () {
-		greeting = Greeting(database, 'test');
+		greet = Greet();
+		greeting = Greeting(database, 'test', greet);
 		await greeting.resetNames();
 	});
 
 	describe('addName, getUserData', function () {
-		it('should be able to set a name in database and return data for give username', async function () {
+		it('should be able to set a name in database and return data for given username', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				const expected = {
@@ -37,8 +39,8 @@ describe('Greeting', async function () {
 
 		it('should be able to set multiple names in database and return data for each given username', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				const expected1 = {
@@ -53,8 +55,8 @@ describe('Greeting', async function () {
 				assert.equal(expected1.afrikaans, userData1.afrikaans);
 				assert.equal(expected1.xhosa, userData1.xhosa);
 
-				greeting.setName("Keziah");
-				greeting.setLanguage("afrikaans");
+				greet.setName("Keziah");
+				greet.setLanguage("afrikaans");
 				await greeting.addName();
 
 				const expected2 = {
@@ -77,12 +79,12 @@ describe('Greeting', async function () {
 	describe('getUsers', function () {
 		it('should be get a list of usernames as objects', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("xhosa");
+				greet.setName("Nicholas");
+				greet.setLanguage("xhosa");
 				await greeting.addName();
 
-				greeting.setName("Keziah");
-				greeting.setLanguage("afrikaans");
+				greet.setName("Keziah");
+				greet.setLanguage("afrikaans");
 				await greeting.addName();
 
 				assert.deepEqual([{ username: "Nicholas" }, { username: "Keziah" }], await greeting.getUsers());
@@ -103,8 +105,8 @@ describe('Greeting', async function () {
 	describe('getUserCount', function () {
 		it('should be able to count the number of users in the database for a single user', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				assert.equal(1, await greeting.getUserCount());
@@ -115,12 +117,12 @@ describe('Greeting', async function () {
 
 		it('should be able to count the number of users in the database for multiple users', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
-				greeting.setName("Keziah");
-				greeting.setLanguage("afrikaans");
+				greet.setName("Keziah");
+				greet.setLanguage("afrikaans");
 				await greeting.addName();
 
 				assert.equal(2, await greeting.getUserCount());
@@ -141,8 +143,8 @@ describe('Greeting', async function () {
 	describe('hasBeenGreeted', function () {
 		it('should be able to check if a user has been greeted', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				assert.equal(true, await greeting.hasBeenGreeted());
@@ -153,7 +155,7 @@ describe('Greeting', async function () {
 
 		it('should be able to check if a user has not been greeted', async function () {
 			try {
-				greeting.setName("Nicholas");
+				greet.setName("Nicholas");
 
 				assert.equal(false, await greeting.hasBeenGreeted());
 			} catch (error) {
@@ -165,8 +167,8 @@ describe('Greeting', async function () {
 	describe('getGreetCount', function () {
 		it('should be able to count the number of times a user has been greeted', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				assert.equal(1, await greeting.getGreetCount("Nicholas"));
@@ -177,8 +179,8 @@ describe('Greeting', async function () {
 
 		it('should be able to count more than 1 greeting for a user', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 				await greeting.addName();
 				await greeting.addName();
@@ -191,8 +193,8 @@ describe('Greeting', async function () {
 
 		it('should be able to count the number of times a user has been greeted in a specific language', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("afrikaans");
+				greet.setName("Nicholas");
+				greet.setLanguage("afrikaans");
 				await greeting.addName();
 				await greeting.addName();
 
@@ -204,11 +206,11 @@ describe('Greeting', async function () {
 
 		it('should be able to count the number of times a user has been greeted in different languages', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("afrikaans");
+				greet.setName("Nicholas");
+				greet.setLanguage("afrikaans");
 				await greeting.addName();
 
-				greeting.setLanguage("english");
+				greet.setLanguage("english");
 				await greeting.addName();
 				await greeting.addName();
 				await greeting.addName();
@@ -232,8 +234,8 @@ describe('Greeting', async function () {
 	describe('getGreetCount', function () {
 		it('should be able to count if a single user has been greeted', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				assert.equal(1, await greeting.getUserCount());
@@ -244,12 +246,12 @@ describe('Greeting', async function () {
 
 		it('should be able to count the number of users that have been greeted', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 
-				greeting.setName("Keziah");
-				greeting.setLanguage("english");
+				greet.setName("Keziah");
+				greet.setLanguage("english");
 				await greeting.addName();
 
 				assert.equal(2, await greeting.getUserCount());
@@ -260,8 +262,8 @@ describe('Greeting', async function () {
 
 		it('should not count a single user more than once if greeted multiple times', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("english");
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
 				await greeting.addName();
 				await greeting.addName();
 				await greeting.addName();
@@ -276,8 +278,8 @@ describe('Greeting', async function () {
 	describe('resetNames', function () {
 		it('should reset greeted users', async function () {
 			try {
-				greeting.setName("Nicholas");
-				greeting.setLanguage("xhosa");
+				greet.setName("Nicholas");
+				greet.setLanguage("xhosa");
 				await greeting.addName();
 
 				assert.equal(1, await greeting.getUserCount());

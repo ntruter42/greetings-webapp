@@ -1,10 +1,10 @@
-export default function (greeting) {
+export default function (greeting, app) {
 
 	async function home(req, res) {
-		const message = greeting.getGreeting();
+		const message = app.getGreeting();
 		const error = req.flash('error')[0];
 		const count = await greeting.getUserCount();
-		const last = greeting.getLast();
+		const last = app.getLast();
 
 		res.render('index', {
 			message: message,
@@ -18,7 +18,7 @@ export default function (greeting) {
 		const users = await greeting.getUsers();
 		const count = await greeting.getUserCount();
 		const empty = await greeting.getUserCount() == 0 ? true : false;
-		const last = greeting.getLast();
+		const last = app.getLast();
 
 		res.render('greeted', {
 			users: users,
@@ -32,7 +32,7 @@ export default function (greeting) {
 		const username = req.params.username;
 		const count = await greeting.getGreetCount(req.params.username);
 		const plural = await greeting.getGreetCount(req.params.username) === 1 ? '' : 's';
-		const last = greeting.getLast();
+		const last = app.getLast();
 
 		const engCount = await greeting.getGreetCount(req.params.username, 'english');
 		const engPlural = await greeting.getGreetCount(req.params.username, 'english') === 1 ? '' : 's';
@@ -56,15 +56,15 @@ export default function (greeting) {
 	};
 
 	async function greetings(req, res) {
-		greeting.setName(req.body.name);
-		greeting.setLanguage(req.body.language);
+		app.setName(req.body.name);
+		app.setLanguage(req.body.language);
 
-		if (greeting.getName() && greeting.getLanguage()) {
+		if (app.getName() && app.getLanguage()) {
 			await greeting.addName();
-			greeting.setLast();
+			app.setLast();
 		}
 
-		req.flash('error', greeting.getErrorMessage());
+		req.flash('error', app.getErrorMessage());
 
 		res.redirect('/');
 	};

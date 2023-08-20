@@ -27,11 +27,11 @@ describe('Greeting', async function () {
 					afrikaans: 0,
 					xhosa: 0
 				}
-				const userData = await greeting.getUserData("Nicholas");
-				assert.equal(expected.username, userData.username);
-				assert.equal(expected.english, userData.english);
-				assert.equal(expected.afrikaans, userData.afrikaans);
-				assert.equal(expected.xhosa, userData.xhosa);
+				const result = await greeting.getUserData("Nicholas");
+				assert.equal(expected.username, result.username);
+				assert.equal(expected.english, result.english);
+				assert.equal(expected.afrikaans, result.afrikaans);
+				assert.equal(expected.xhosa, result.xhosa);
 			} catch (error) {
 				throw error;
 			}
@@ -49,11 +49,11 @@ describe('Greeting', async function () {
 					afrikaans: 0,
 					xhosa: 0
 				}
-				const userData1 = await greeting.getUserData("Nicholas");
-				assert.equal(expected1.username, userData1.username);
-				assert.equal(expected1.english, userData1.english);
-				assert.equal(expected1.afrikaans, userData1.afrikaans);
-				assert.equal(expected1.xhosa, userData1.xhosa);
+				const results1 = await greeting.getUserData("Nicholas");
+				assert.equal(expected1.username, results1.username);
+				assert.equal(expected1.english, results1.english);
+				assert.equal(expected1.afrikaans, results1.afrikaans);
+				assert.equal(expected1.xhosa, results1.xhosa);
 
 				greet.setName("Keziah");
 				greet.setLanguage("afrikaans");
@@ -65,11 +65,11 @@ describe('Greeting', async function () {
 					afrikaans: 1,
 					xhosa: 0
 				}
-				const userData2 = await greeting.getUserData("Keziah");
-				assert.equal(expected2.username, userData2.username);
-				assert.equal(expected2.english, userData2.english);
-				assert.equal(expected2.afrikaans, userData2.afrikaans);
-				assert.equal(expected2.xhosa, userData2.xhosa);
+				const results2 = await greeting.getUserData("Keziah");
+				assert.equal(expected2.username, results2.username);
+				assert.equal(expected2.english, results2.english);
+				assert.equal(expected2.afrikaans, results2.afrikaans);
+				assert.equal(expected2.xhosa, results2.xhosa);
 			} catch (error) {
 				throw error;
 			}

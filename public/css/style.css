@@ -165,6 +165,10 @@ a {
 	animation: fade-in 1s;
 }
 
+.fade-out {
+	animation: fade-out 1s;
+}
+
 .hidden {
 	opacity: 0;
 	transition: opacity 1s;

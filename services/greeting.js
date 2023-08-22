@@ -26,7 +26,7 @@ export default function Greeting(db, schema, greet) {
 				count = userData.english + userData.afrikaans + userData.xhosa;
 			}
 		}
-		return count;
+		return { count, english: userData.english, afrikaans: userData.afrikaans, xhosa: userData.xhosa };
 	}
 
 	async function resetNames() {
@@ -50,10 +50,10 @@ export default function Greeting(db, schema, greet) {
 			const query = `UPDATE ${schema}.greetedusers SET ${greet.getLanguage()} = ${greet.getLanguage()} + 1 WHERE username = '${greet.getName()}'`;
 			await db.none(query);
 		} else {
-			const eng = greet.getLanguage() === 'english' ? 1 : 0;
-			const afr = greet.getLanguage() === 'afrikaans' ? 1 : 0;
-			const xho = greet.getLanguage() === 'xhosa' ? 1 : 0;
-			const query = `INSERT INTO ${schema}.greetedusers(username, english, afrikaans, xhosa) VALUES ('${greet.getName()}', ${eng}, ${afr}, ${xho})`;
+			const english = greet.getLanguage() === 'english' ? 1 : 0;
+			const afrikaans = greet.getLanguage() === 'afrikaans' ? 1 : 0;
+			const xhosa = greet.getLanguage() === 'xhosa' ? 1 : 0;
+			const query = `INSERT INTO ${schema}.greetedusers(username, english, afrikaans, xhosa) VALUES ('${greet.getName()}', ${english}, ${afrikaans}, ${xhosa})`;
 			await db.none(query);
 		}
 	}

@@ -171,7 +171,7 @@ describe('Greeting', async function () {
 				greet.setLanguage("english");
 				await greeting.addName();
 
-				assert.equal(1, await greeting.getGreetCount("Nicholas"));
+				assert.equal(1, await greeting.getGreetCount("Nicholas").count);
 			} catch (error) {
 				throw error;
 			}
@@ -185,7 +185,7 @@ describe('Greeting', async function () {
 				await greeting.addName();
 				await greeting.addName();
 
-				assert.equal(3, await greeting.getGreetCount("Nicholas"));
+				assert.equal(3, await greeting.getGreetCount("Nicholas").count);
 			} catch (error) {
 				throw error;
 			}
@@ -198,7 +198,7 @@ describe('Greeting', async function () {
 				await greeting.addName();
 				await greeting.addName();
 
-				assert.equal(2, await greeting.getGreetCount("Nicholas", "afrikaans"));
+				assert.equal(2, await greeting.getGreetCount("Nicholas").afrikaans);
 			} catch (error) {
 				throw error;
 			}
@@ -215,8 +215,8 @@ describe('Greeting', async function () {
 				await greeting.addName();
 				await greeting.addName();
 
-				assert.equal(1, await greeting.getGreetCount("Nicholas", "afrikaans"));
-				assert.equal(3, await greeting.getGreetCount("Nicholas", "english"));
+				assert.equal(1, await greeting.getGreetCount("Nicholas", "afrikaans").afrikaans);
+				assert.equal(3, await greeting.getGreetCount("Nicholas", "english").english);
 			} catch (error) {
 				throw error;
 			}
@@ -224,7 +224,7 @@ describe('Greeting', async function () {
 
 		it('should return 0 if a user does not exist', async function () {
 			try {
-				assert.equal(0, await greeting.getGreetCount("Keziah"));
+				assert.equal(0, await greeting.getGreetCount("Keziah").count);
 			} catch (error) {
 				throw error;
 			}

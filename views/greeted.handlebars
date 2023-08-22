@@ -3,14 +3,18 @@
 
 	{{#if empty}}<span>There are no greeted users</span>{{/if}}
 
-	{{#each users}}
-	<div><a href="/counter/{{username}}">{{username}}</a></div>
-	{{/each}}
+	<div class="flex col wrap">
+		{{#each users}}
+		<a class="username" href="/counter/{{username}}">{{username}}</a>
+		{{/each}}
+	</div>
 
+	{{#if count}}
 	<form class="greeted-count flex col" action="/reset-greeted" method="post">
 		<div class="flex row">
 			<span>Greeted Users:</span><span class="count">{{count}}</span>
 		</div>
-		{{#if count}}<button type="submit">Reset</button>{{/if}}
+		<button name="reset" type="submit">Reset</button>
 	</form>
+	{{/if}}
 </div>

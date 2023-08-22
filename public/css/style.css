@@ -22,6 +22,7 @@
 	--primary-bg: #faf;
 	--secondary-fg: #aaf;
 	--secondary-bg: #aff;
+	--accent-color: #82e;
 	--gradient: linear-gradient(var(--primary-bg), var(--secondary-bg));
 }
 
@@ -33,9 +34,6 @@ html {
 body {
 	width: 100%;
 	height: 100%;
-	background: var(--gradient);
-	background-size: cover;
-	background-position: top center;
 }
 
 nav {
@@ -86,19 +84,26 @@ a {
 }
 
 button {
+	background: white;
 	box-shadow: 0 2px black;
 }
 
+button:hover {
+	background: #0002;
+	text-shadow: 1px 1px white;
+	transform: scale(1.05);
+}
+
 button:active {
-	box-shadow: 0 1px black;
+	transform: scale(1);
 }
 
 input[type=text] {
-	outline: 1px solid var(--primary-fg);
+	outline: 0.03125rem solid var(--primary-fg);
 }
 
 input[type=text]:focus {
-	outline: 2px solid blueviolet;
+	outline: 0.125rem solid var(--accent-color);
 }
 
 a {
@@ -119,21 +124,28 @@ a {
 	flex-direction: row;
 }
 
+.flex.wrap {
+	flex-wrap: wrap;
+}
+
 .container {
+	background: var(--gradient);
+
 	width: 100%;
 	height: calc(100% - 1.5rem);
 	padding: 1rem;
-
-	/* justify-content: center; */
-	/* justify-self: center; */
-	/* align-items: center; */
-	/* align-self: center; */
-	/* vertical-align: middle; */
-	/* margin: auto; */
 }
 
 .language-select {
 	justify-content: center;
+}
+
+.language-select > label {
+	background: #fff4;
+	border-radius: 1rem 0.25rem 0.25rem 1rem;
+	border: 1px solid #888;
+
+	padding: 0.03125rem 0.25rem;
 }
 
 .position-wrapper {
@@ -144,6 +156,25 @@ a {
 	margin: auto;
 }
 
+.username {
+	background: #fff4;
+	border: 2px solid var(--accent-color);
+
+	padding: 0.03125rem 0.25rem;
+
+	text-decoration: none;
+}
+
+.username:hover {
+	transform: scale(1.05);
+	box-shadow: 0 1px 2px black;
+}
+
+.username:active {
+	transform: scale(1);
+	box-shadow: 0 1px 2px black;
+}
+
 .greeting-message {
 	font-family: "Coffee Healing";
 	font-style: italic;
@@ -152,10 +183,11 @@ a {
 }
 
 .error-message {
-	background: #fcc;
+	background: #fdd;
 	color: red;
 	border: 1px solid red;
 	border-radius: 0.25rem;
+	box-shadow: 0 0 1rem -0.5rem black;
 
 	margin-inline: auto;
 	padding: 0.25rem 0.5rem;

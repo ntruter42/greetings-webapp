@@ -4,54 +4,49 @@ export default function (greeting, app) {
 		const message = app.getGreeting();
 		const error = req.flash('error')[0];
 		const count = await greeting.getUserCount();
-		const last = app.getLast();
 
 		res.render('index', {
-			message: message,
-			error: error,
-			count: count,
-			last: last
+			message,
+			error,
+			count,
 		});
 	};
 
 	async function greeted(req, res) {
 		const users = await greeting.getUsers();
 		const count = await greeting.getUserCount();
-		const empty = await greeting.getUserCount() == 0 ? true : false;
-		const last = app.getLast();
+		const empty = count === 0 ? true : false;
 
 		res.render('greeted', {
-			users: users,
-			count: count,
-			empty: empty,
-			last: last
+			users,
+			count,
+			empty
 		});
 	};
 
 	async function counter(req, res) {
 		const username = req.params.username;
-		const count = await greeting.getGreetCount(req.params.username);
-		const plural = await greeting.getGreetCount(req.params.username) === 1 ? '' : 's';
-		const last = app.getLast();
+		const user_data = await greeting.getGreetCount(req.params.username);
 
-		const engCount = await greeting.getGreetCount(req.params.username, 'english');
-		const engPlural = await greeting.getGreetCount(req.params.username, 'english') === 1 ? '' : 's';
-		const afrCount = await greeting.getGreetCount(req.params.username, 'afrikaans');
-		const afrPlural = await greeting.getGreetCount(req.params.username, 'afrikaans') === 1 ? '' : 's';
-		const xhoCount = await greeting.getGreetCount(req.params.username, 'xhosa');
-		const xhoPlural = await greeting.getGreetCount(req.params.username, 'xhosa') === 1 ? '' : 's';
+		const count = user_data.count;
+		const plural = count === 1 ? '' : 's';
+		const eng_count = user_data.english;
+		const eng_plural = eng_count === 1 ? '' : 's';
+		const afr_count = user_data.afrikaans;
+		const afr_plural = afr_count === 1 ? '' : 's';
+		const xho_count = user_data.xhosa;
+		const xho_plural = xho_count === 1 ? '' : 's';
 
 		res.render('counter', {
-			username: username,
-			count: count,
-			plural: plural,
-			english: engCount,
-			engPlural: engPlural,
-			afrikaans: afrCount,
-			afrPlural: afrPlural,
-			xhosa: xhoCount,
-			xhoPlural: xhoPlural,
-			last: last
+			username,
+			count,
+			plural,
+			eng_count,
+			eng_plural,
+			afr_count,
+			afr_plural,
+			xho_count,
+			xho_plural
 		});
 	};
 
@@ -61,11 +56,8 @@ export default function (greeting, app) {
 
 		if (app.getName() && app.getLanguage()) {
 			await greeting.addName();
-			app.setLast();
 		}
-
 		req.flash('error', app.getErrorMessage());
-
 		res.redirect('/');
 	};
 

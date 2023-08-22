@@ -2,7 +2,6 @@ export default function () {
 	let username = '';
 	let language = '';
 	let error = '';
-	let last = '';
 	let greeting = {
 		'english': 'Hello, ',
 		'afrikaans': 'Hallo, ',
@@ -61,14 +60,6 @@ export default function () {
 		return /^[a-zA-Z]+((-| )[a-zA-Z]+)?$/.test(name);
 	}
 
-	function setLast() {
-		last = getName();
-	}
-
-	function getLast() {
-		return last;
-	}
-
 	return {
 		setName,
 		getName,
@@ -77,8 +68,6 @@ export default function () {
 		getGreeting,
 		setErrorMessage,
 		getErrorMessage,
-		isName,
-		setLast,
-		getLast
+		isName
 	}
 }

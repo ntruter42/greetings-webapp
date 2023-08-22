@@ -25,6 +25,8 @@ export default function Greeting(db, schema, greet) {
 			} else {
 				count = userData.english + userData.afrikaans + userData.xhosa;
 			}
+		} else {
+			return { count };
 		}
 		return { count, english: userData.english, afrikaans: userData.afrikaans, xhosa: userData.xhosa };
 	}

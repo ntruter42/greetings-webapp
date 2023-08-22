@@ -138,100 +138,7 @@ describe('Greeting', async function () {
 				throw error;
 			}
 		});
-	});
 
-	describe('hasBeenGreeted', function () {
-		it('should be able to check if a user has been greeted', async function () {
-			try {
-				greet.setName("Nicholas");
-				greet.setLanguage("english");
-				await greeting.addName();
-
-				assert.equal(true, await greeting.hasBeenGreeted());
-			} catch (error) {
-				throw error;
-			}
-		});
-
-		it('should be able to check if a user has not been greeted', async function () {
-			try {
-				greet.setName("Nicholas");
-
-				assert.equal(false, await greeting.hasBeenGreeted());
-			} catch (error) {
-				throw error;
-			}
-		});
-	});
-
-	describe('getGreetCount', function () {
-		it('should be able to count the number of times a user has been greeted', async function () {
-			try {
-				greet.setName("Nicholas");
-				greet.setLanguage("english");
-				await greeting.addName();
-
-				assert.equal(1, await greeting.getGreetCount("Nicholas").count);
-			} catch (error) {
-				throw error;
-			}
-		});
-
-		it('should be able to count more than 1 greeting for a user', async function () {
-			try {
-				greet.setName("Nicholas");
-				greet.setLanguage("english");
-				await greeting.addName();
-				await greeting.addName();
-				await greeting.addName();
-
-				assert.equal(3, await greeting.getGreetCount("Nicholas").count);
-			} catch (error) {
-				throw error;
-			}
-		});
-
-		it('should be able to count the number of times a user has been greeted in a specific language', async function () {
-			try {
-				greet.setName("Nicholas");
-				greet.setLanguage("afrikaans");
-				await greeting.addName();
-				await greeting.addName();
-
-				assert.equal(2, await greeting.getGreetCount("Nicholas").afrikaans);
-			} catch (error) {
-				throw error;
-			}
-		});
-
-		it('should be able to count the number of times a user has been greeted in different languages', async function () {
-			try {
-				greet.setName("Nicholas");
-				greet.setLanguage("afrikaans");
-				await greeting.addName();
-
-				greet.setLanguage("english");
-				await greeting.addName();
-				await greeting.addName();
-				await greeting.addName();
-
-				assert.equal(1, await greeting.getGreetCount("Nicholas", "afrikaans").afrikaans);
-				assert.equal(3, await greeting.getGreetCount("Nicholas", "english").english);
-			} catch (error) {
-				throw error;
-			}
-		});
-
-		it('should return 0 if a user does not exist', async function () {
-			try {
-				assert.equal(0, await greeting.getGreetCount("Keziah").count);
-			} catch (error) {
-				throw error;
-			}
-		});
-	});
-
-	describe('getGreetCount', function () {
 		it('should be able to count if a single user has been greeted', async function () {
 			try {
 				greet.setName("Nicholas");
@@ -269,6 +176,97 @@ describe('Greeting', async function () {
 				await greeting.addName();
 
 				assert.equal(1, await greeting.getUserCount());
+			} catch (error) {
+				throw error;
+			}
+		});
+	});
+
+	describe('hasBeenGreeted', function () {
+		it('should be able to check if a user has been greeted', async function () {
+			try {
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
+				await greeting.addName();
+
+				assert.equal(true, await greeting.hasBeenGreeted());
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it('should be able to check if a user has not been greeted', async function () {
+			try {
+				greet.setName("Nicholas");
+
+				assert.equal(false, await greeting.hasBeenGreeted());
+			} catch (error) {
+				throw error;
+			}
+		});
+	});
+
+	describe('getGreetCount', function () {
+		it('should be able to count the number of times a user has been greeted', async function () {
+			try {
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
+				await greeting.addName();
+
+				assert.equal(1, (await greeting.getGreetCount("Nicholas")).count);
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it('should be able to count more than 1 greeting for a user', async function () {
+			try {
+				greet.setName("Nicholas");
+				greet.setLanguage("english");
+				await greeting.addName();
+				await greeting.addName();
+				await greeting.addName();
+
+				assert.equal(3, (await greeting.getGreetCount("Nicholas")).count);
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it('should be able to count the number of times a user has been greeted in a specific language', async function () {
+			try {
+				greet.setName("Nicholas");
+				greet.setLanguage("afrikaans");
+				await greeting.addName();
+				await greeting.addName();
+
+				assert.equal(2, (await greeting.getGreetCount("Nicholas")).afrikaans);
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it('should be able to count the number of times a user has been greeted in different languages', async function () {
+			try {
+				greet.setName("Nicholas");
+				greet.setLanguage("afrikaans");
+				await greeting.addName();
+
+				greet.setLanguage("english");
+				await greeting.addName();
+				await greeting.addName();
+				await greeting.addName();
+
+				assert.equal(1, (await greeting.getGreetCount("Nicholas", "afrikaans")).afrikaans);
+				assert.equal(3, (await greeting.getGreetCount("Nicholas", "english")).english);
+			} catch (error) {
+				throw error;
+			}
+		});
+
+		it('should return 0 if a user does not exist', async function () {
+			try {
+				assert.equal(0, (await greeting.getGreetCount("Keziah")).count);
 			} catch (error) {
 				throw error;
 			}
